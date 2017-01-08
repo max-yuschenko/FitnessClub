@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using FitnessClub.Data;
 using FitnessClub.Models;
 using FitnessClub.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessClub
 {
@@ -52,7 +53,11 @@ namespace FitnessClub
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44398;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -85,6 +90,12 @@ namespace FitnessClub
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+
+            app.UseFacebookAuthentication(new FacebookOptions()
+            {
+                AppId = Configuration["Authentication:Facebook:AppId"],
+                AppSecret = Configuration["Authentication:Facebook:AppSecret"]
+            });
 
             app.UseMvc(routes =>
             {
