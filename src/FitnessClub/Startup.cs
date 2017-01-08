@@ -13,6 +13,7 @@ using FitnessClub.Data;
 using FitnessClub.Models;
 using FitnessClub.Services;
 using Microsoft.AspNetCore.Mvc;
+using AspNet.Security.OAuth.Instagram;
 
 namespace FitnessClub
 {
@@ -95,6 +96,12 @@ namespace FitnessClub
             {
                 AppId = Configuration["Authentication:Facebook:AppId"],
                 AppSecret = Configuration["Authentication:Facebook:AppSecret"]
+            });
+
+            app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
+            {
+                ClientId = Configuration["Authentication:Instagram:ClientId"],
+                ClientSecret = Configuration["Authentication:Instagram:ClientSecret"]
             });
 
             app.UseMvc(routes =>
