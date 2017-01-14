@@ -14,6 +14,7 @@ using FitnessClub.Models;
 using FitnessClub.Services;
 using Microsoft.AspNetCore.Mvc;
 using AspNet.Security.OAuth.Instagram;
+using Microsoft.AspNetCore.Identity;
 
 namespace FitnessClub
 {
@@ -97,7 +98,7 @@ namespace FitnessClub
                 AppId = Configuration["Authentication:Facebook:AppId"],
                 AppSecret = Configuration["Authentication:Facebook:AppSecret"]
             });
-
+            
             app.UseInstagramAuthentication(new InstagramAuthenticationOptions()
             {
                 ClientId = Configuration["Authentication:Instagram:ClientId"],
@@ -110,6 +111,36 @@ namespace FitnessClub
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DatabaseInitialize(app.ApplicationServices).Wait();
+        }
+
+        public async Task DatabaseInitialize(IServiceProvider serviceProvider)
+        {
+            UserManager<ApplicationUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string adminEmail = "admin@gmail.com";
+            string password = "_Aa123456";
+            if (await roleManager.FindByNameAsync("admin") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("admin"));
+            }
+            if (await roleManager.FindByNameAsync("user") == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole("user"));
+            }
+            if (await userManager.FindByNameAsync(adminEmail) == null)
+            {
+                ApplicationUser admin = new ApplicationUser { Email = adminEmail, UserName = adminEmail };
+                IdentityResult result = await userManager.CreateAsync(admin, password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(admin, "admin");
+                }
+            }
         }
     }
 }
