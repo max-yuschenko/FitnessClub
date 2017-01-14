@@ -10,6 +10,12 @@ namespace FitnessClub.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<PersonalCard> PersonalCards { get; set; }
+        public DbSet<SeasonTicket> SeasonTickets { get; set; }
+        public DbSet<TrainingProgram> TrainingPrograms { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<File> Files{ get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
