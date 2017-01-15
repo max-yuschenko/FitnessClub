@@ -19,6 +19,21 @@
         <label asp-for="Surname" class="control-label">Фамилия</label>
         <input type="text" asp-for="Surname" class="form-control" />
     </div>
+    @if (User.IsInRole("user"))
+    {
+        <div class="form-group">
+            <label asp-for="Weight" class="control-label">Вес</label>
+            <input type="number" asp-for="Weight" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Height" class="control-label">Рост</label>
+            <input type="number" asp-for="Height" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label">Состояние здоровья</label>
+            <input type="text" asp-for="Description" class="form-control" />
+        </div>
+    }
     <div class="form-group">
         <input type="submit" value="Сохранить" class="btn btn-default" />
     </div>

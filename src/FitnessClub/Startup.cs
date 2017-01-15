@@ -64,10 +64,14 @@ namespace FitnessClub
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<FitnessAppSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            FitnessAppSeedData seeder)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -112,7 +116,9 @@ namespace FitnessClub
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DatabaseInitialize(app.ApplicationServices).Wait();
+            
+            //DatabaseInitialize(app.ApplicationServices).Wait();
+            seeder.EnsureSeedData().Wait();
         }
 
         public async Task DatabaseInitialize(IServiceProvider serviceProvider)
@@ -122,8 +128,11 @@ namespace FitnessClub
             RoleManager<IdentityRole> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+            //Don't do that way
             string adminEmail = "admin@gmail.com";
             string password = "_Aa123456";
+            //
+
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));

@@ -21,6 +21,8 @@ namespace FitnessClub.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
+        private IFitnessRepository _repository;
+
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,

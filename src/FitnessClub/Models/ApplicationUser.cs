@@ -11,7 +11,10 @@ namespace FitnessClub.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public PersonalCard PersonalCard { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
+        public string HealthDescription { get; set; }
+        //public PersonalCard PersonalCard { get; set; }
         public TrainingProgram TrainingProgram { get; set; }
         public SeasonTicket SeasonTicket { get; set; }
     }

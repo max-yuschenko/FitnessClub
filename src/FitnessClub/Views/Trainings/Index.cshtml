@@ -1,0 +1,17 @@
+﻿@model FitnessClub.Models.TrainingsViewModel
+@{
+    ViewBag.Title = "Просмотр тренировок";
+}
+
+<h2>Title of program: @Model.TrainingId</h2>
+<h3>Description: @Model.TrainingDescription</h3>
+<table class="table-responsive">
+    @foreach (var workout in Model.Workouts)
+    {
+        <tr>
+            <td>@workout.ID</td>
+            <td>@workout.Title</td>
+            <td>@workout.Description</td>
+        </tr>
+    }
+</table>

@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitnessClub.Models.UserViewModels
+namespace FitnessClub.Models.CabinetViewModels
 {
-    public class CreateUserViewModel
+    public class EditViewModel
     {
-        [Required]
         public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Surname { get; set; }
-
+        public double Weight { get; set; }
+        public double Height { get; set; }
+        public string Description { get; set; }
     }
 }

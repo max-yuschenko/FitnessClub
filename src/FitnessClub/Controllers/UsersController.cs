@@ -55,7 +55,11 @@ namespace FitnessClub.Controllers
             EditUserViewModel model = new EditUserViewModel { Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                Surname = user.Surname};
+                Surname = user.Surname,
+                Height = user.Height,
+                Weight = user.Weight,
+                Description = user.HealthDescription
+            };
             return View(model);
         }
 
@@ -71,6 +75,9 @@ namespace FitnessClub.Controllers
                     user.UserName = model.Email;
                     user.Name = model.Name;
                     user.Surname = model.Surname;
+                    user.Weight = model.Weight;
+                    user.Height = model.Height;
+                    user.HealthDescription = model.Description;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

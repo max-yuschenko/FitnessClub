@@ -17,5 +17,12 @@ namespace FitnessClub.Models.ManageViewModels
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        //Added
+        public double Weight { get; set; }
+
+        public double Height { get; set; }
+
+        public string Description { get; set; }
     }
 }
