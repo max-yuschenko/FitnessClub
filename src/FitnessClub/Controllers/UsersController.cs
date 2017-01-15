@@ -52,7 +52,10 @@ namespace FitnessClub.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email};
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname};
             return View(model);
         }
 
@@ -66,6 +69,8 @@ namespace FitnessClub.Controllers
                 {
                     user.Email = model.Email;
                     user.UserName = model.Email;
+                    user.Name = model.Name;
+                    user.Surname = model.Surname;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
